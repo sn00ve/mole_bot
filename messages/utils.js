@@ -1,0 +1,127 @@
+import { waitAnswer } from "../conversations/utils.js";
+import { OPERATORS, MESSAGES } from "../constants/index.js";
+import { isSNW, isSkipped, isDeposit } from "../constants/index.js";
+import { getFloatNumber, getRandomNumber } from "../utils/index.js";
+import { messageKeyboard } from "../keyboards/index.js";
+
+export async function sendMessage(prop, conversation, ctx) {
+	if (!prop || !MESSAGES[prop]) return null;
+
+	const message = MESSAGES[prop];
+
+	ctx.reply(message.text, {
+		reply_markup: message.keyboard ? message.keyboard(conversation, ctx) : undefined
+	});
+
+	if (conversation) {
+		const value = await waitAnswer(conversation, ctx);
+
+		conversation.session[prop] = value;
+
+		return value;
+	}
+}
+
+export function replyWithParse(ctx, message) {
+	if (!message) return;
+
+	return ctx.reply(message, {
+		parse_mode: "HTML",
+		disable_web_page_preview: true,
+		reply_markup: messageKeyboard()
+	});
+}
+
+export function operatorText(operator) {
+	return `${isSNW(operator) ? "🟣" : "🟢"} <b>#${operator}</b>\n`;
+}
+
+export function contactText(contact, direction, operator) {
+	let text = `\n<b>${isDeposit(direction) ? "Выдает" : "Принимает"}:</b> `;
+
+	if (!isSkipped(contact)) {
+		text += contact;
+	}
+
+	if (operator) {
+		const operatorUsername = OPERATORS[operator].username;
+
+		text += `\n<b>${isDeposit(direction) ? "Принимает" : "Выдает"}:</b> ${operatorUsername}`;
+	}
+
+	return text;
+}
+
+export function clientText(client, direction) {
+	if (client === "matchContact") {
+		return "";
+	}
+
+	let text = `\n<b>${isDeposit(direction) ? "Принимает" : "Выдает"}:</b>`;
+
+	if (isSkipped(client)) {
+		return text;
+	}
+
+	return `${text} ${client}`;
+}
+
+export function amountText(amount, currency) {
+	const amountNumber = getFloatNumber(amount);
+
+	let text = `\n<b>Сумма:</b>`;
+
+	if (!Number.isNaN(amountNumber)) {
+		return `${text} <code>${amountNumber}</code> ${currency}`;
+	}
+
+	return `${text}  ${currency}`;
+}
+
+export function calculationText(calculation, currency) {
+	let text = `\n<b>Сумма:</b> `;
+
+	if (calculation) {
+		text += calculation;
+	}
+
+	if (currency) {
+		text += ` ${currency}`;
+	}
+
+	return text;
+}
+
+export function walletText(wallet, link) {
+	let text = `\n<b>Кошелек:</b> `;
+
+	if (!wallet || isSkipped(wallet)) {
+		return text;
+	}
+
+	if (!isSkipped(link)) {
+		text += `<a href="${link}">${wallet}</a>`;
+	} else {
+		text += `<code>${wallet}</code>`;
+	}
+
+	return text;
+}
+
+export function codeText(code) {
+	if (code === "without") {
+		return "";
+	}
+
+	return `\n<b>Код:</b> ${code === "generate" ? getRandomNumber(10000, 99999) : code}`;
+}
+
+export function detailsText(details) {
+	let text = `\n<b>Реквизиты:</b>`;
+
+	if (isSkipped(details)) {
+		return text;
+	}
+
+	return `${text} <code>${details.replace(/\s/g, "")}</code>`;
+}

@@ -1,0 +1,15 @@
+export { startKeyboard } from "./startKeyboard.js";
+export { operatorKeyboard } from "./operatorKeyboard.js";
+export { currencyKeyboard } from "./currencyKeyboard.js";
+export { directionKeyboard } from "./directionKeyboard.js";
+export { rateKeyboard } from "./rateKeyboard.js";
+export { rateСrossKeyboard } from "./rateСrossKeyboard.js";
+export { rateUsdtKeyboard } from "./rateUsdtKeyboard.js";
+export { contactKeyboard } from "./contactKeyboard.js";
+export { clientKeyboard } from "./clientKeyboard.js";
+export { walletKeyboard } from "./walletKeyboard.js";
+export { codeKeyboard } from "./codeKeyboard.js";
+export { linkKeyboard } from "./linkKeyboard.js";
+export { detailsKeyboard } from "./detailsKeyboard.js";
+export { optionKeyboard } from "./optionKeyboard.js";
+export { messageKeyboard } from "./messageKeyboard.js";

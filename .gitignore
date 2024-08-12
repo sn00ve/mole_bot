@@ -1,0 +1,10 @@
+node_modules
+
+.idea
+.vscode
+.env
+
+.DS_Store
+
+constants/operators.js
+constants/contacts.js
