@@ -1,6 +1,6 @@
-import { isSNW, isGZPRM, isDSPT, isRUB, isEUR, isSkipped, isDeposit } from "../constants/index.js";
+import { isSNW, isGZPRM, isDSPT, isCRPTX, isRUB, isEUR, isSkipped, isDeposit } from "../constants/index.js";
 import { sendMessage } from "../messages/utils.js";
-import { gzprmMessage, cardMessage, dsptMessage, snwMessage, orderMessage } from "../messages/index.js";
+import { gzprmMessage, cardMessage, dsptMessage, crptxMessage, snwMessage, orderMessage } from "../messages/index.js";
 
 export async function orderConversation(conversation, ctx) {
 	await ctx.api.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
@@ -82,6 +82,13 @@ async function operatorOrder(conversation, ctx) {
 		await sendMessage("rateUsdt", conversation, ctx);
 
 		return dsptMessage(conversation, ctx);
+	}
+
+	if (isCRPTX(contact)) {
+		await sendMessage("amount", conversation, ctx);
+		await sendMessage("rate", conversation, ctx);
+
+		return crptxMessage(conversation, ctx);
 	}
 
 	await sendMessage("client", conversation, ctx);

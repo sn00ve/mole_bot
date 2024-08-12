@@ -1,5 +1,5 @@
 import { waitAnswer } from "../conversations/utils.js";
-import { OPERATORS, MESSAGES } from "../constants/index.js";
+import { OPERATORS, MESSAGES, MATCH_CONTACT } from "../constants/index.js";
 import { isSNW, isSkipped, isDeposit } from "../constants/index.js";
 import { getFloatNumber, getRandomNumber } from "../utils/index.js";
 import { messageKeyboard } from "../keyboards/index.js";
@@ -53,7 +53,7 @@ export function contactText(contact, direction, operator) {
 }
 
 export function clientText(client, direction) {
-	if (client === "matchContact") {
+	if (client === MATCH_CONTACT) {
 		return "";
 	}
 

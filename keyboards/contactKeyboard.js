@@ -17,7 +17,11 @@ export function contactKeyboard(conversation) {
 		}
 	} else {
 		if (isWithdraw(direction)) {
-			contactList.push(CONTACTS.DSPT, CONTACTS.CRPTX);
+			if (isRUB(currency)) {
+				contactList.push(CONTACTS.DSPT);
+			}
+
+			contactList.push(CONTACTS.CRPTX);
 		}
 	}
 
