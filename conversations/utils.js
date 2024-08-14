@@ -1,14 +1,17 @@
 export async function waitAnswer(conversation, ctx) {
 	ctx = await conversation.wait();
 
-	if (ctx.callbackQuery?.message) {
-		await ctx.api.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
+	let value;
 
-		return ctx.callbackQuery.data;
+	if (ctx.callbackQuery?.message) {
+		value = ctx.callbackQuery.data;
 	}
 
-	// await ctx.api.deleteMessage(ctx.chat.id, conversation.session.message);
-	// await ctx.api.deleteMessage(ctx.chat.id, ctx.message.message_id);
+	if (ctx.message?.text) {
+		value = ctx.message.text;
 
-	return ctx.message.text;
+		await ctx.api.deleteMessage(ctx.chat.id, ctx.message.message_id);
+	}
+
+	return value;
 }

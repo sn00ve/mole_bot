@@ -1,4 +1,4 @@
-export { startKeyboard } from "./startKeyboard.js";
+export { menuKeyboard } from "./menuKeyboard.js";
 export { operatorKeyboard } from "./operatorKeyboard.js";
 export { currencyKeyboard } from "./currencyKeyboard.js";
 export { directionKeyboard } from "./directionKeyboard.js";

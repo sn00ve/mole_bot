@@ -5,3 +5,4 @@ export * from "./directions.js";
 export * from "./keyboards.js";
 export * from "./messages.js";
 export * from "./operators.js";
+export * from "./stickers.js";

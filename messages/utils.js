@@ -9,17 +9,24 @@ export async function sendMessage(prop, conversation, ctx) {
 
 	const message = MESSAGES[prop];
 
-	ctx.reply(message.text, {
+	const reply = await ctx.reply(message.text, {
 		reply_markup: message.keyboard ? message.keyboard(conversation, ctx) : undefined
 	});
 
+	let value;
+
 	if (conversation) {
-		const value = await waitAnswer(conversation, ctx);
+		value = await waitAnswer(conversation, ctx);
 
 		conversation.session[prop] = value;
 
-		return value;
+		await ctx.api.deleteMessage(reply.chat.id, reply.message_id);
 	}
+
+	return {
+		value,
+		reply
+	};
 }
 
 export function replyWithParse(ctx, message) {
@@ -30,6 +37,15 @@ export function replyWithParse(ctx, message) {
 		disable_web_page_preview: true,
 		reply_markup: messageKeyboard()
 	});
+}
+
+export async function deleteMessages(ctx, start, end) {
+	if (!start || !end) return;
+
+	await ctx.api.deleteMessages(
+		ctx.chat.id,
+		[...Array(end - start - 1).keys()].map(i => i + start + 1)
+	);
 }
 
 export function operatorText(operator) {

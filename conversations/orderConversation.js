@@ -7,7 +7,7 @@ export async function orderConversation(conversation, ctx) {
 
 	conversation.session.type = "order";
 
-	const operator = await sendMessage("operator", conversation, ctx);
+	const { value: operator } = await sendMessage("operator", conversation, ctx);
 
 	await sendMessage("direction", conversation, ctx);
 	await sendMessage("currency", conversation, ctx);
@@ -26,7 +26,7 @@ async function snwOrder(conversation, ctx) {
 	if (isGZPRM(contact)) {
 		await sendMessage("amount", conversation, ctx);
 
-		const wallet = await sendMessage("wallet", conversation, ctx);
+		const { value: wallet } = await sendMessage("wallet", conversation, ctx);
 
 		if (!isSkipped(wallet)) {
 			await sendMessage("link", conversation, ctx);
@@ -39,7 +39,7 @@ async function snwOrder(conversation, ctx) {
 		await sendMessage("amount", conversation, ctx);
 		await sendMessage("rate", conversation, ctx);
 
-		const wallet = await sendMessage("wallet", conversation, ctx);
+		const { value: wallet } = await sendMessage("wallet", conversation, ctx);
 
 		if (!isSkipped(wallet)) {
 			await sendMessage("link", conversation, ctx);
@@ -53,7 +53,7 @@ async function snwOrder(conversation, ctx) {
 		await sendMessage("rate", conversation, ctx);
 		await sendMessage("details", conversation, ctx);
 
-		const wallet = await sendMessage("wallet", conversation, ctx);
+		const { value: wallet } = await sendMessage("wallet", conversation, ctx);
 
 		if (!isSkipped(wallet)) {
 			await sendMessage("link", conversation, ctx);
@@ -64,7 +64,7 @@ async function snwOrder(conversation, ctx) {
 
 	await sendMessage("amount", conversation, ctx);
 
-	const wallet = await sendMessage("wallet", conversation, ctx);
+	const { value: wallet } = await sendMessage("wallet", conversation, ctx);
 
 	if (!isSkipped(wallet)) {
 		await sendMessage("link", conversation, ctx);
@@ -99,7 +99,7 @@ async function operatorOrder(conversation, ctx) {
 		await sendMessage("rateCross", conversation, ctx);
 	}
 
-	const wallet = await sendMessage("wallet", conversation, ctx);
+	const { value: wallet } = await sendMessage("wallet", conversation, ctx);
 
 	if (!isSkipped(wallet)) {
 		await sendMessage("link", conversation, ctx);
