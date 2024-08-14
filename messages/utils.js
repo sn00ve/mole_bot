@@ -60,7 +60,7 @@ export function contactText(contact, direction, operator) {
 	}
 
 	if (operator) {
-		const operatorUsername = OPERATORS[operator].username;
+		const operatorUsername = Buffer.from(OPERATORS[operator].data, "hex").toString();
 
 		text += `\n<b>${isDeposit(direction) ? "Принимает" : "Выдает"}:</b> ${operatorUsername}`;
 	}

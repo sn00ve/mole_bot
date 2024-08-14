@@ -7,6 +7,6 @@ export function operatorKeyboard(conversation) {
 	return InlineKeyboard.from(
 		Object.keys(OPERATORS)
 			.filter(operator => type !== "summary" || !isSNW(operator))
-			.map(direction => [InlineKeyboard.text(direction)])
+			.map(operator => [InlineKeyboard.text(operator)])
 	);
 }

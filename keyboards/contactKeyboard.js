@@ -1,5 +1,5 @@
 import { InlineKeyboard } from "grammy";
-import { CONTACTS, CARD_CONTACTS, isSNW, isRUB, isBTC, isDeposit, isWithdraw } from "../constants/index.js";
+import { CONTACTS, CD_CONTACTS, isSNW, isRUB, isBTC, isDeposit, isWithdraw } from "../constants/index.js";
 import { withSkipButton } from "./utils.js";
 
 export function contactKeyboard(conversation) {
@@ -17,7 +17,7 @@ export function contactKeyboard(conversation) {
 		}
 
 		if (isRUB(currency)) {
-			contactList.push(...CARD_CONTACTS);
+			contactList.push(...CD_CONTACTS);
 		}
 	} else {
 		if (isWithdraw(direction)) {
@@ -30,6 +30,13 @@ export function contactKeyboard(conversation) {
 	}
 
 	return withSkipButton(
-		InlineKeyboard.from(contactList.map(contact => [InlineKeyboard.text(contact.name, contact.username)]))
+		InlineKeyboard.from(
+			contactList.map(contact => [
+				InlineKeyboard.text(
+					Buffer.from(contact.value, "hex").toString(),
+					contact.data ? Buffer.from(contact.data, "hex").toString() : undefined
+				)
+			])
+		)
 	);
 }
