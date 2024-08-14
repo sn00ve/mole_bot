@@ -18,7 +18,7 @@ export async function summaryConversation(conversation, ctx) {
 	for (let i = 0; i < currencies.length; i++) {
 		const currency = currencies[i];
 
-		ctx.reply(`🤔 Добавить ${currency}?`, {
+		const reply = await ctx.reply(`🤔 Добавить ${currency}?`, {
 			reply_markup: optionKeyboard()
 		});
 
@@ -27,6 +27,8 @@ export async function summaryConversation(conversation, ctx) {
 		if (value === "yes") {
 			conversation.session.currencies.push(currency);
 		}
+
+		await ctx.api.deleteMessage(reply.chat.id, reply.message_id);
 	}
 
 	await summaryMessage(conversation, ctx);

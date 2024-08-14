@@ -1,1 +1,1 @@
-export const COMMANDS = [{ command: "start", description: "Меню" }];
+export const COMMANDS = [{ command: "menu", description: "Меню" }];

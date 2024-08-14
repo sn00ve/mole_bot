@@ -1,5 +1,5 @@
 import { InlineKeyboard } from "grammy";
 
-export function startKeyboard() {
+export function menuKeyboard() {
 	return new InlineKeyboard().text("Заявка", "createOrder").row().text("Расчет", "createSummary");
 }

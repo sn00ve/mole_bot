@@ -1,5 +1,5 @@
 import {
-	startKeyboard,
+	menuKeyboard,
 	operatorKeyboard,
 	directionKeyboard,
 	currencyKeyboard,
@@ -15,12 +15,9 @@ import {
 } from "../keyboards/index.js";
 
 export const MESSAGES = {
-	forbidden: {
-		text: "❌"
-	},
-	start: {
-		text: "🧐 Меню",
-		keyboard: startKeyboard
+	menu: {
+		text: "👇 Меню",
+		keyboard: menuKeyboard
 	},
 	operator: {
 		text: "🫡 Исполнитель",
@@ -43,7 +40,7 @@ export const MESSAGES = {
 		keyboard: clientKeyboard
 	},
 	amount: {
-		text: "🤑 Сумма"
+		text: "💰 Сумма"
 	},
 	rate: {
 		text: "💹 Курс",
