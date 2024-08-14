@@ -1,6 +1,5 @@
 import { InlineKeyboard } from "grammy";
 import { CURRENCIES, isSNW, isDeposit } from "../constants/index.js";
-import { createButtons } from "./utils.js";
 
 export function currencyKeyboard(conversation) {
 	const { operator, direction } = conversation.session;
@@ -17,5 +16,5 @@ export function currencyKeyboard(conversation) {
 		currencyList = [CURRENCIES.USD, CURRENCIES.RUB, CURRENCIES.EUR];
 	}
 
-	return InlineKeyboard.from(createButtons(currencyList));
+	return InlineKeyboard.from(currencyList.map(currency => [InlineKeyboard.text(currency)]));
 }
