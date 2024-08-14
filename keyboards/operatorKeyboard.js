@@ -1,15 +1,12 @@
 import { InlineKeyboard } from "grammy";
 import { OPERATORS, isSNW } from "../constants/index.js";
-import { createButtons } from "./utils.js";
 
 export function operatorKeyboard(conversation) {
 	const { type } = conversation.session;
 
-	let buttons = Object.keys(OPERATORS);
-
-	if (type === "summary") {
-		buttons = buttons.filter(operator => !isSNW(operator));
-	}
-
-	return InlineKeyboard.from(createButtons(buttons));
+	return InlineKeyboard.from(
+		Object.keys(OPERATORS)
+			.filter(operator => type !== "summary" || !isSNW(operator))
+			.map(direction => [InlineKeyboard.text(direction)])
+	);
 }

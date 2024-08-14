@@ -1,6 +1,6 @@
 import { InlineKeyboard } from "grammy";
-import { CONTACTS, isSNW, isRUB, isBTC, isDeposit, isWithdraw } from "../constants/index.js";
-import { createButtons, withSkipButton } from "./utils.js";
+import { CONTACTS, CARD_CONTACTS, isSNW, isRUB, isBTC, isDeposit, isWithdraw } from "../constants/index.js";
+import { withSkipButton } from "./utils.js";
 
 export function contactKeyboard(conversation) {
 	const { operator, direction, currency } = conversation.session;
@@ -15,6 +15,10 @@ export function contactKeyboard(conversation) {
 		if (!isRUB(currency)) {
 			contactList.push(CONTACTS.GZPRM);
 		}
+
+		if (isRUB(currency)) {
+			contactList.push(...CARD_CONTACTS);
+		}
 	} else {
 		if (isWithdraw(direction)) {
 			if (isRUB(currency)) {
@@ -25,5 +29,7 @@ export function contactKeyboard(conversation) {
 		}
 	}
 
-	return withSkipButton(InlineKeyboard.from(createButtons(contactList)));
+	return withSkipButton(
+		InlineKeyboard.from(contactList.map(contact => [InlineKeyboard.text(contact.name, contact.username)]))
+	);
 }
