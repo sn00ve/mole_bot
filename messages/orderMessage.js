@@ -45,5 +45,5 @@ export function orderMessage(conversation, ctx) {
 	message += "\n";
 	message += walletText(wallet, link);
 
-	return replyWithParse(ctx, message);
+	return replyWithParse(ctx, message, conversation);
 }

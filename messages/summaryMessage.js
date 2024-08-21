@@ -24,5 +24,5 @@ export async function summaryMessage(conversation, ctx) {
 		}
 	});
 
-	return replyWithParse(ctx, message);
+	return replyWithParse(ctx, message, conversation);
 }

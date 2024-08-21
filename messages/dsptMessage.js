@@ -16,7 +16,7 @@ export function dsptMessage(conversation, ctx) {
 		message += "\n\n";
 		message += walletText(wallet, link);
 
-		return replyWithParse(ctx, message);
+		return replyWithParse(ctx, message, conversation);
 	}
 
 	const roundAmount = getRoundNumber(amount * rate * DSPT_USDT_FEE * (rateUsdt - DSPT_RUB_FEE), 1000);
@@ -27,5 +27,5 @@ export function dsptMessage(conversation, ctx) {
 	message += calculationText(calculation, currency);
 	message += contactText(contact, direction, operator);
 
-	return replyWithParse(ctx, message);
+	return replyWithParse(ctx, message, conversation);
 }

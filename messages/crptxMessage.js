@@ -29,5 +29,5 @@ export function crptxMessage(conversation, ctx) {
 		message += calculationText(calculation, "USDT");
 	}
 
-	return replyWithParse(ctx, message);
+	return replyWithParse(ctx, message, conversation);
 }

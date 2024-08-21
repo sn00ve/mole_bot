@@ -13,5 +13,5 @@ export function snwMessage(conversation, ctx) {
 	message += "\n";
 	message += walletText();
 
-	return replyWithParse(ctx, message);
+	return replyWithParse(ctx, message, conversation);
 }

@@ -29,13 +29,14 @@ export async function sendMessage(prop, conversation, ctx) {
 	};
 }
 
-export function replyWithParse(ctx, message) {
+export function replyWithParse(ctx, message, conversation) {
 	if (!message) return;
 
 	return ctx.reply(message, {
 		parse_mode: "HTML",
 		disable_web_page_preview: true,
-		reply_markup: messageKeyboard()
+		disable_notification: true,
+		reply_markup: messageKeyboard(conversation)
 	});
 }
 

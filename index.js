@@ -61,7 +61,17 @@ bot.callbackQuery("createSummary", async ctx => {
 });
 
 bot.callbackQuery("saveMessage", async ctx => {
-	await ctx.api.copyMessage(process.env.CHANNEL_ID, ctx.chat.id, ctx.callbackQuery.message.message_id);
+	await ctx.api.copyMessage(process.env.ACCOUNTING_CHANNEL_ID, ctx.chat.id, ctx.callbackQuery.message.message_id);
+
+	await ctx.api.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
+
+	await ctx.answerCallbackQuery();
+});
+
+bot.callbackQuery("saveCardMessage", async ctx => {
+	await ctx.api.copyMessage(process.env.ACCOUNTING_CHANNEL_ID, ctx.chat.id, ctx.callbackQuery.message.message_id);
+
+	await ctx.api.copyMessage(process.env.CARD_CHANNEL_ID, ctx.chat.id, ctx.callbackQuery.message.message_id);
 
 	await ctx.api.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
 
