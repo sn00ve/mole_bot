@@ -14,6 +14,8 @@ const bot = new Bot(process.env.BOT_API_KEY);
 bot.use(session({ initial: () => ({}) }));
 bot.use(conversations());
 
+bot.api.setMyCommands();
+
 bot.hears(MENU_BUTTON, async ctx => {
 	await ctx.conversation.exit();
 
