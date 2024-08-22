@@ -15,6 +15,8 @@ bot.use(conversations());
 
 bot.api.setMyCommands(COMMANDS);
 
+let startMessageId;
+
 bot.command("start", async ctx => {
 	if (!isAdmin(ctx.from.id)) {
 		await ctx.api.sendSticker(ctx.chat.id, STICKERS.forbidden);
@@ -22,11 +24,15 @@ bot.command("start", async ctx => {
 		return ctx.api.deleteMessage(ctx.chat.id, ctx.message.message_id);
 	}
 
-	const startMessage = await ctx.api.sendSticker(ctx.chat.id, STICKERS.permitted);
+	const reply = await ctx.api.sendSticker(ctx.chat.id, STICKERS.permitted);
 
-	ctx.session.startMessage = startMessage.message_id;
+	startMessageId = reply.message_id;
 
 	await ctx.api.deleteMessage(ctx.chat.id, ctx.message.message_id);
+
+	await ctx.conversation.exit();
+
+	await sendMessage("menu", undefined, ctx);
 });
 
 bot.command("menu", async ctx => {
@@ -38,7 +44,7 @@ bot.command("menu", async ctx => {
 
 	const { reply } = await sendMessage("menu", undefined, ctx);
 
-	deleteMessages(ctx, ctx.session.startMessage, reply.message_id);
+	deleteMessages(ctx, startMessageId, reply.message_id);
 });
 
 bot.use(createConversation(orderConversation));
