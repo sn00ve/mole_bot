@@ -19,6 +19,10 @@ bot.hears(MENU_BUTTON, async ctx => {
 
 	const { reply } = await sendMessage("menu", undefined, ctx);
 
+	if (!startMessageId) {
+		startMessageId = ctx.message.message_id - 2;
+	}
+
 	deleteMessages(ctx, startMessageId, reply.message_id);
 });
 
