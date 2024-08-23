@@ -3,6 +3,7 @@ export { menuKeyboard } from "./menuKeyboard.js";
 export { operatorKeyboard } from "./operatorKeyboard.js";
 export { currencyKeyboard } from "./currencyKeyboard.js";
 export { directionKeyboard } from "./directionKeyboard.js";
+export { amountKeyboard } from "./amountKeyboard.js";
 export { rateKeyboard } from "./rateKeyboard.js";
 export { rateСrossKeyboard } from "./rateСrossKeyboard.js";
 export { rateUsdtKeyboard } from "./rateUsdtKeyboard.js";

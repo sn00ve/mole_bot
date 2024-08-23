@@ -36,8 +36,11 @@ async function snwOrder(conversation, ctx) {
 	}
 
 	if (isDSPT(contact)) {
-		await sendMessage("amount", conversation, ctx);
-		await sendMessage("rate", conversation, ctx);
+		const { value: amount } = await sendMessage("amount", conversation, ctx);
+
+		if (!isSkipped(amount)) {
+			await sendMessage("rate", conversation, ctx);
+		}
 
 		const { value: wallet } = await sendMessage("wallet", conversation, ctx);
 
@@ -49,8 +52,12 @@ async function snwOrder(conversation, ctx) {
 	}
 
 	if (isDeposit(direction) && isRUB(currency)) {
-		await sendMessage("amount", conversation, ctx);
-		await sendMessage("rate", conversation, ctx);
+		const { value: amount } = await sendMessage("amount", conversation, ctx);
+
+		if (!isSkipped(amount)) {
+			await sendMessage("rate", conversation, ctx);
+		}
+
 		await sendMessage("details", conversation, ctx);
 
 		const { value: wallet } = await sendMessage("wallet", conversation, ctx);
@@ -77,26 +84,36 @@ async function operatorOrder(conversation, ctx) {
 	const { contact, currency } = conversation.session;
 
 	if (isDSPT(contact)) {
-		await sendMessage("amount", conversation, ctx);
-		await sendMessage("rate", conversation, ctx);
-		await sendMessage("rateUsdt", conversation, ctx);
+		const { value: amount } = await sendMessage("amount", conversation, ctx);
+
+		if (!isSkipped(amount)) {
+			await sendMessage("rate", conversation, ctx);
+			await sendMessage("rateUsdt", conversation, ctx);
+		}
 
 		return dsptMessage(conversation, ctx);
 	}
 
 	if (isCRPTX(contact)) {
-		await sendMessage("amount", conversation, ctx);
-		await sendMessage("rate", conversation, ctx);
+		const { value: amount } = await sendMessage("amount", conversation, ctx);
+
+		if (!isSkipped(amount)) {
+			await sendMessage("rate", conversation, ctx);
+		}
 
 		return crptxMessage(conversation, ctx);
 	}
 
 	await sendMessage("client", conversation, ctx);
-	await sendMessage("amount", conversation, ctx);
-	await sendMessage("rate", conversation, ctx);
 
-	if (isEUR(currency)) {
-		await sendMessage("rateCross", conversation, ctx);
+	const { value: amount } = await sendMessage("amount", conversation, ctx);
+
+	if (!isSkipped(amount)) {
+		await sendMessage("rate", conversation, ctx);
+
+		if (isEUR(currency)) {
+			await sendMessage("rateCross", conversation, ctx);
+		}
 	}
 
 	const { value: wallet } = await sendMessage("wallet", conversation, ctx);

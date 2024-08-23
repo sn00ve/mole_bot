@@ -1,14 +1,21 @@
 import { DSPT_USDT_FEE, DSPT_RUB_FEE, isSNW } from "../constants/index.js";
 import { operatorText, contactText, calculationText, walletText, replyWithParse } from "./utils.js";
-import { getRoundNumber } from "../utils/index.js";
+import { getRoundNumber, getFloatNumber } from "../utils/index.js";
 
 export function dsptMessage(conversation, ctx) {
 	const { operator, direction, currency, contact, amount, rate, rateUsdt, wallet, link } = conversation.session;
 
-	if (isSNW(operator)) {
-		const roundAmount = (amount / (rate * DSPT_USDT_FEE)).toFixed(5);
+	let calculation;
 
-		const calculation = `${amount}/(${rate}*${DSPT_USDT_FEE}) = <code>${roundAmount}</code>`;
+	if (isSNW(operator)) {
+		const amountNumber = getFloatNumber(amount);
+		const rateNumber = getFloatNumber(rate);
+
+		const roundAmount = Number((amountNumber / (rateNumber * DSPT_USDT_FEE)).toFixed(5));
+
+		if (!Number.isNaN(roundAmount)) {
+			calculation = `${amountNumber}/(${rateNumber}*${DSPT_USDT_FEE}) = <code>${roundAmount}</code>`;
+		}
 
 		let message = operatorText(operator);
 		message += calculationText(calculation, currency);
@@ -21,7 +28,9 @@ export function dsptMessage(conversation, ctx) {
 
 	const roundAmount = getRoundNumber(amount * rate * DSPT_USDT_FEE * (rateUsdt - DSPT_RUB_FEE), 1000);
 
-	const calculation = `${amount}*${rate}*${DSPT_USDT_FEE}*(${rateUsdt}-${DSPT_RUB_FEE}) = <code>${roundAmount}</code>`;
+	if (!Number.isNaN(roundAmount)) {
+		calculation = `${amount}*${rate}*${DSPT_USDT_FEE}*(${rateUsdt}-${DSPT_RUB_FEE}) = <code>${roundAmount}</code>`;
+	}
 
 	let message = operatorText(operator);
 	message += calculationText(calculation, currency);

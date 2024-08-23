@@ -18,7 +18,7 @@ export function cardMessage(conversation, ctx) {
 	let calculation;
 
 	if (!Number.isNaN(amountNumber) && !Number.isNaN(rateNumber)) {
-		calculation = `${amount}/${rate} = <code>${Math.ceil(amount / rate)}</code>`;
+		calculation = `${amountNumber}/${rateNumber} = <code>${Math.ceil(amountNumber / rateNumber)}</code>`;
 	}
 
 	let message = operatorText(operator);

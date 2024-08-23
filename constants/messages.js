@@ -3,6 +3,7 @@ import {
 	operatorKeyboard,
 	directionKeyboard,
 	currencyKeyboard,
+	amountKeyboard,
 	contactKeyboard,
 	clientKeyboard,
 	rateKeyboard,
@@ -40,7 +41,8 @@ export const MESSAGES = {
 		keyboard: clientKeyboard
 	},
 	amount: {
-		text: "💰 Сумма"
+		text: "💰 Сумма",
+		keyboard: amountKeyboard
 	},
 	rate: {
 		text: "💹 Курс",

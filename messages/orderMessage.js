@@ -25,12 +25,12 @@ export function orderMessage(conversation, ctx) {
 
 	if (!Number.isNaN(amountNumber) && !Number.isNaN(rateNumber)) {
 		if (isUSD(currency)) {
-			calculation = `${amount}/${rateUsd} = <code>${Math.ceil(amount / rateUsd)}</code>`;
+			calculation = `${amountNumber}/${rateUsd} = <code>${Math.ceil(amountNumber / rateUsd)}</code>`;
 		} else if (isRUB(currency)) {
-			calculation = `${amount}/${rate} = <code>${Math.ceil(amount / rate)}</code>`;
+			calculation = `${amountNumber}/${rateNumber} = <code>${Math.ceil(amountNumber / rateNumber)}</code>`;
 		} else if (isEUR(currency)) {
-			calculation = `${amount}*${rateCrossNumber}/${rateUsd} = <code>${Math.ceil(
-				(amount * rateCrossNumber) / rateUsd
+			calculation = `${amountNumber}*${rateCrossNumber}/${rateUsd} = <code>${Math.ceil(
+				(amountNumber * rateCrossNumber) / rateUsd
 			)}</code>`;
 		}
 	}
