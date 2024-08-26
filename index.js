@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import { Bot, session } from "grammy";
 import { conversations, createConversation } from "@grammyjs/conversations";
-import { orderConversation, summaryConversation } from "./conversations/index.js";
+import { orderConversation } from "./conversations/index.js";
 import { STICKERS, MENU_BUTTON } from "./constants/index.js";
 import { isAdmin } from "./utils/index.js";
 import { sendMessage, deleteMessages } from "./messages/utils.js";
@@ -13,6 +13,8 @@ const bot = new Bot(process.env.BOT_API_KEY);
 
 bot.use(session({ initial: () => ({}) }));
 bot.use(conversations());
+
+let startMessageId;
 
 bot.hears(MENU_BUTTON, async ctx => {
 	await ctx.conversation.exit();
@@ -27,9 +29,6 @@ bot.hears(MENU_BUTTON, async ctx => {
 });
 
 bot.use(createConversation(orderConversation));
-bot.use(createConversation(summaryConversation));
-
-let startMessageId;
 
 bot.command("start", async ctx => {
 	if (!isAdmin(ctx.from.id)) {
@@ -55,14 +54,6 @@ bot.callbackQuery("createOrder", async ctx => {
 	await ctx.conversation.exit();
 
 	await ctx.conversation.enter("orderConversation");
-
-	await ctx.answerCallbackQuery();
-});
-
-bot.callbackQuery("createSummary", async ctx => {
-	await ctx.conversation.exit();
-
-	await ctx.conversation.enter("summaryConversation");
 
 	await ctx.answerCallbackQuery();
 });

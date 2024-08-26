@@ -1,12 +1,6 @@
 import { InlineKeyboard } from "grammy";
-import { OPERATORS, isSNW } from "../constants/index.js";
+import { OPERATORS } from "../constants/index.js";
 
-export function operatorKeyboard(conversation) {
-	const { type } = conversation.session;
-
-	return InlineKeyboard.from(
-		Object.keys(OPERATORS)
-			.filter(operator => type !== "summary" || !isSNW(operator))
-			.map(operator => [InlineKeyboard.text(operator)])
-	);
+export function operatorKeyboard() {
+	return InlineKeyboard.from(Object.keys(OPERATORS).map(operator => [InlineKeyboard.text(operator)]));
 }
