@@ -4,7 +4,7 @@ import { conversations, createConversation } from "@grammyjs/conversations";
 import { orderConversation } from "./conversations/index.js";
 import { STICKERS, MENU_BUTTON } from "./constants/index.js";
 import { isAdmin } from "./utils/index.js";
-import { sendMessage, deleteMessages } from "./messages/utils.js";
+import { sendMenuMessage, deleteMessages } from "./messages/utils.js";
 import { startKeyboard } from "./keyboards/index.js";
 
 dotenv.config();
@@ -17,9 +17,7 @@ bot.use(conversations());
 let startMessageId;
 
 bot.hears(MENU_BUTTON, async ctx => {
-	await ctx.conversation.exit();
-
-	const { reply } = await sendMessage("menu", undefined, ctx);
+	const { reply } = await sendMenuMessage(ctx);
 
 	if (!startMessageId) {
 		startMessageId = ctx.message.message_id - 2;
@@ -43,11 +41,7 @@ bot.command("start", async ctx => {
 
 	startMessageId = reply.message_id;
 
-	await ctx.api.deleteMessage(ctx.chat.id, ctx.message.message_id);
-
-	await ctx.conversation.exit();
-
-	await sendMessage("menu", undefined, ctx);
+	sendMenuMessage(ctx, ctx.message.message_id);
 });
 
 bot.callbackQuery("createOrder", async ctx => {
@@ -61,7 +55,7 @@ bot.callbackQuery("createOrder", async ctx => {
 bot.callbackQuery("saveMessage", async ctx => {
 	await ctx.api.copyMessage(process.env.ACCOUNTING_CHANNEL_ID, ctx.chat.id, ctx.callbackQuery.message.message_id);
 
-	await ctx.api.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
+	sendMenuMessage(ctx, ctx.callbackQuery.message.message_id);
 
 	await ctx.answerCallbackQuery();
 });
@@ -71,7 +65,7 @@ bot.callbackQuery("saveCardMessage", async ctx => {
 
 	await ctx.api.copyMessage(process.env.CARD_CHANNEL_ID, ctx.chat.id, ctx.callbackQuery.message.message_id);
 
-	await ctx.api.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
+	sendMenuMessage(ctx, ctx.callbackQuery.message.message_id);
 
 	await ctx.answerCallbackQuery();
 });

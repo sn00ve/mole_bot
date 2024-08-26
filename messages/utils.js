@@ -4,6 +4,16 @@ import { isSNW, isSkipped, isDeposit } from "../constants/index.js";
 import { getFloatNumber, getRandomNumber } from "../utils/index.js";
 import { messageKeyboard } from "../keyboards/index.js";
 
+export async function sendMenuMessage(ctx, messageId) {
+	if (messageId) {
+		await ctx.api.deleteMessage(ctx.chat.id, messageId);
+	}
+
+	await ctx.conversation.exit();
+
+	return sendMessage("menu", undefined, ctx);
+}
+
 export async function sendMessage(prop, conversation, ctx) {
 	if (!prop || !MESSAGES[prop]) return null;
 
