@@ -71,5 +71,8 @@ export const MESSAGES = {
 	details: {
 		text: "💳 Реквизиты",
 		keyboard: detailsKeyboard
+	},
+	password: {
+		text: "🤫 Пароль"
 	}
 };
