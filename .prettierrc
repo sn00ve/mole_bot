@@ -1,0 +1,8 @@
+{
+    "printWidth": 120,
+    "singleAttributePerLine": true,
+    "trailingComma": "none",
+    "experimentalTernaries": true,
+    "arrowParens": "avoid",
+    "tabWidth": 4
+}
