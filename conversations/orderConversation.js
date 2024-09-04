@@ -5,8 +5,6 @@ import { gzprmMessage, cardMessage, dsptMessage, crptxMessage, snwMessage, order
 export async function orderConversation(conversation, ctx) {
 	await ctx.api.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
 
-	conversation.session.type = "order";
-
 	const { value: operator } = await sendMessage("operator", conversation, ctx);
 
 	await sendMessage("direction", conversation, ctx);
