@@ -21,7 +21,7 @@ export const MESSAGES = {
 		keyboard: menuKeyboard
 	},
 	operator: {
-		text: "🫡 Исполнитель",
+		text: "🫡 Оператор",
 		keyboard: operatorKeyboard
 	},
 	direction: {
